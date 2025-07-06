@@ -25,36 +25,13 @@ export const workshopApi = createApi({
       query: (id) => `workshops/${id}`,
       providesTags: (result, error, id) => [{ type: 'Workshop', id }],
     }),
-    createWorkshop: builder.mutation<Workshop, Partial<Workshop>>({
-      query: (body) => ({
-        url: 'workshops',
-        method: 'POST',
-        body,
-      }),
-      invalidatesTags: ['Workshop'],
-    }),
-    updateWorkshop: builder.mutation<Workshop, Partial<Workshop>>({
-      query: ({ id, ...patch }) => ({
-        url: `workshops/${id}`,
-        method: 'PATCH',
-        body: patch,
-      }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'Workshop', id }],
-    }),
-    deleteWorkshop: builder.mutation<void, string>({
-      query: (id) => ({
-        url: `workshops/${id}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['Workshop'],
-    }),
+
+
+
   }),
 });
 
 export const {
   useGetWorkshopsQuery,
   useGetWorkshopByIdQuery,
-  useCreateWorkshopMutation,
-  useUpdateWorkshopMutation,
-  useDeleteWorkshopMutation,
 } = workshopApi;

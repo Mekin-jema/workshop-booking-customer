@@ -1,6 +1,6 @@
-import { Booking, BookingStatus, CreateBookingDto } from '@/app/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { RootState } from '../store'; // Adjust the import path as needed to point to your store definition
+import { Booking, BookingStatus, CreateBookingDto } from '@/types';
 
 export const bookingApi = createApi({
   reducerPath: 'bookingApi',

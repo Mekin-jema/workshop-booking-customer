@@ -1,20 +1,21 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@/store/store';
-import { fetchWorkshops } from '@/store/workshopSlice';
-import WorkshopCard from '@/components/WorkshopCard';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { RootState } from '@/redux/store/store';
+// Adjust the import path below to where your store is defined
 
 export default function WorkshopList() {
-  const dispatch = useAppDispatch();
-  const { workshops, status, error } = useAppSelector((state) => state.workshops);
+  const dispatch = useDispatch();
+  // Replace 'RootState' with the actual type of your Redux root state if different
+  const { workshops, status, error } = useSelector((state: RootState) => state.workshops);
 
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(fetchWorkshops());
+      // dispatch(fetchWorkshops());
     }
   }, [status, dispatch]);
 

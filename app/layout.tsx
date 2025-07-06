@@ -3,8 +3,8 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 // import ReduxProvider from '@/providers/ReduxProvider';
 // import { ToastContainer } from 'react-toastify';
-import { ReduxProvider } from './providers/ReduxProvider';
 import { Toaster } from 'sonner';
+import { ReduxProvider } from '@/providers/ReduxProvider';
 // import Navbar from '@/components/Navbar';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ReduxProvider>
           {/* <Navbar /> */}

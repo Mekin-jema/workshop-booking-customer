@@ -1,38 +1,98 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { notFound } from "next/navigation";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Calendar, Clock, Users, CheckCircle2, AlertCircle } from "lucide-react";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { toast } from "sonner";
+import {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardContent,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+    Calendar,
+    Clock,
+    Users,
+    CheckCircle2,
+    AlertCircle,
+} from "lucide-react";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 import { TimeSlot } from "@/types";
-import BookingForm from "@/components/booking-form";
-import { useSelector } from "react-redux";
+import {
+    useGetWorkshopByIdQuery,
+} from "@/Redux/features/workshops/workshopApiSlice";
+import {
+    useCreateBookingMutation,
+} from "@/Redux/features/bookings/bookingApiSlice";
 import { RootState } from "@/Redux/app/store";
-import { useGetWorkshopsQuery } from "@/Redux/features/workshops/workshopApiSlice";
 
 export default function WorkshopDetailPage({ params }: { params: { id: string } }) {
+    const [selectedTimeSlotId, setSelectedTimeSlotId] = useState<string | null>(null);
+
     const {
-        data: workshopsData = [],
-        isLoading: isWorkshopsLoading,
-        isError: isWorkshopsError,
-        error: workshopsError,
-        refetch: refetchWorkshops
-    } = useGetWorkshopsQuery({}, { refetchOnMountOrArgChange: true });
+        data: workshop,
+        isLoading,
+        isError,
+        error,
+        refetch: refetchWorkshop,
+    } = useGetWorkshopByIdQuery(params.id);
 
-    const workshop = workshopsData
+    const [createBooking, {
+        isLoading: isBookingLoading,
+        isSuccess: isBookingSuccess,
+        isError: isBookingError,
+        error: bookingError,
+    }] = useCreateBookingMutation();
 
-    if (!workshop) notFound();
     const { user } = useSelector((state: RootState) => state.auth);
 
+    useEffect(() => {
+        if (isBookingSuccess) {
+            toast.success("Workshop booked successfully!");
+            refetchWorkshop();
+            setSelectedTimeSlotId(null); // reset selection
+        }
+        if (isBookingError) {
+            const errorMessage = (bookingError as any)?.data?.message || "Booking failed";
+            toast.error(errorMessage);
+        }
+    }, [isBookingSuccess, isBookingError, bookingError, refetchWorkshop]);
+
+    const handleBookingSubmit = async (timeSlotId: string) => {
+        if (!user || !workshop) return;
+
+        try {
+            await createBooking({
+                workshopId: workshop.id,
+                timeSlotId,
+                userId: user.id,
+            }).unwrap();
+        } catch (error) {
+            console.error("Booking error:", error);
+        }
+    };
+
+    if (isLoading) return <div className="text-center py-8">Loading workshop details...</div>;
+    if (isError || !workshop) return notFound();
+
+    const availableSlots = workshop.timeSlots.filter((slot: TimeSlot) => slot.availableSpots > 0);
 
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold">{workshop.title}</h1>
                 <Link href="/workshops">
-                    <Button variant="outline">Back to Workshops</Button>
+                    <Button variant="outline" className="cursor-pointer">Back to Workshops</Button>
                 </Link>
             </div>
 
@@ -53,7 +113,9 @@ export default function WorkshopDetailPage({ params }: { params: { id: string } 
                                 <div className="flex items-center">
                                     <Users className="mr-2 h-4 w-4" />
                                     <span>
-                                        {workshop.maxCapacity - workshop.timeSlots.reduce((sum: number, slot: TimeSlot) => sum + (slot.availableSpots || 0), 0)} / {workshop.maxCapacity} participants
+                                        {workshop.maxCapacity - workshop.timeSlots.reduce(
+                                            (sum: number, slot: TimeSlot) => sum + (slot.availableSpots || 0), 0
+                                        )} / {workshop.maxCapacity} participants
                                     </span>
                                 </div>
                             </div>
@@ -104,7 +166,41 @@ export default function WorkshopDetailPage({ params }: { params: { id: string } 
                         </CardHeader>
                         <CardContent>
                             {user ? (
-                                <BookingForm workshop={workshop} timeSlots={workshop.timeSlots} />
+                                <div className="space-y-4">
+                                    {availableSlots.length > 0 ? (
+                                        <>
+                                            <Select onValueChange={(value) => setSelectedTimeSlotId(value)}>
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select a time slot" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {availableSlots.map((slot: TimeSlot) => (
+                                                        <SelectItem key={slot.id} value={String(slot.id)}>
+                                                            {slot.startTime} - {slot.endTime} ({slot.availableSpots} spots left)
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                            <Button
+                                                className="w-full cursor-pointer"
+                                                disabled={isBookingLoading || !selectedTimeSlotId}
+                                                onClick={() => {
+                                                    if (selectedTimeSlotId) {
+                                                        handleBookingSubmit(selectedTimeSlotId);
+                                                    } else {
+                                                        toast.warning("Please select a time slot");
+                                                    }
+                                                }}
+                                            >
+                                                {isBookingLoading ? "Booking..." : "Confirm Booking"}
+                                            </Button>
+                                        </>
+                                    ) : (
+                                        <div className="text-center py-4">
+                                            <p className="text-muted-foreground">No available time slots</p>
+                                        </div>
+                                    )}
+                                </div>
                             ) : (
                                 <div className="space-y-4 text-center">
                                     <p>You need to be logged in to book this workshop</p>

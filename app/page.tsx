@@ -4,10 +4,13 @@ import { Calendar, Clock, Rocket, Sparkles } from "lucide-react";
 import Link from "next/link";
 // import WorkshopCarousel from "@/components/workshop-carousel";
 import Testimonials from "@/components/testimonials";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
 export default async function Home() {
   return (
     <div className="min-h-screen">
+      <Navbar />
       {/* Hero Section */}
       <section id="home" className="relative bg-gradient-to-br from-blue-900 to-purple-800 text-white py-20">
         <div className="container mx-auto px-4 text-center">
@@ -115,10 +118,12 @@ export default async function Home() {
             Join thousands of learners who have accelerated their growth with our workshops
           </p>
           <Button asChild size="lg" className="bg-white text-indigo-600 hover:bg-gray-100">
-            <Link href="/register">Get Started Now</Link>
+            <Link href="/signup">Get Started Now</Link>
           </Button>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }

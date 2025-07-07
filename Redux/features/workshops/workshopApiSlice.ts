@@ -9,6 +9,15 @@ export const workshopApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ['Workshops']
     }),
+
+  getWorkshopById: builder.query({
+  query: (id: string | number) => ({
+    url: `workshops/${id}`,
+    method: 'GET',
+  }),
+  providesTags: (result, error, id) => [{ type: 'Workshops', id }],
+}),
+
     createWorkshop: builder.mutation({
       query: (workshopData) => ({
         url: 'workshops',
@@ -39,5 +48,7 @@ export const {
   useGetWorkshopsQuery,
   useCreateWorkshopMutation,
   useUpdateWorkshopMutation,
-  useDeleteWorkshopMutation
+  useDeleteWorkshopMutation,
+  useGetWorkshopByIdQuery
+
 } = workshopApiSlice;

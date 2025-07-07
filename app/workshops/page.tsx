@@ -12,10 +12,10 @@ import { TimeSlot, Workshop } from "@/types";
 export default function WorkshopsPage() {
     const {
         data: workshopsData = [],
-        isLoading: isWorkshopsLoading,
-        isError: isWorkshopsError,
-        error: workshopsError,
-        refetch: refetchWorkshops
+        // isLoading: isWorkshopsLoading,
+        // isError: isWorkshopsError,
+        // error: workshopsError,
+        // refetch: refetchWorkshops
     } = useGetWorkshopsQuery({}, { refetchOnMountOrArgChange: true });
 
     console.log("Workshops Data:", workshopsData);

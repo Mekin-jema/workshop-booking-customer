@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, Users, } from "lucide-react";
@@ -7,7 +9,7 @@ import { TimeSlot, Workshop } from "@/types";
 
 
 
-export default async function WorkshopsPage() {
+export default function WorkshopsPage() {
     const {
         data: workshopsData = [],
         isLoading: isWorkshopsLoading,

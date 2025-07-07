@@ -1,3 +1,5 @@
+"use client";
+
 import { notFound } from "next/navigation";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,7 +12,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/Redux/app/store";
 import { useGetWorkshopsQuery } from "@/Redux/features/workshops/workshopApiSlice";
 
-export default async function WorkshopDetailPage({ params }: { params: { id: string } }) {
+export default function WorkshopDetailPage({ params }: { params: { id: string } }) {
     const {
         data: workshopsData = [],
         isLoading: isWorkshopsLoading,

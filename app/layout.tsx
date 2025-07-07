@@ -5,6 +5,8 @@ import './globals.css';
 // import { ToastContainer } from 'react-toastify';
 import { Toaster } from 'sonner';
 import { ReduxProvider } from '@/providers/ReduxProvider';
+import Navbar from '@/components/navbar';
+import Footer from '@/components/footer';
 // import Navbar from '@/components/Navbar';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -25,7 +27,9 @@ export default function RootLayout({
         <ReduxProvider>
           {/* <Navbar /> */}
           <main className="container mx-auto px-4 py-8">
+            <Navbar />
             {children}
+            <Footer />
           </main>
           <Toaster position="bottom-right" />
         </ReduxProvider>

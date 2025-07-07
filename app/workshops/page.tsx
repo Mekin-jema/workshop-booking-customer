@@ -18,6 +18,8 @@ export default function WorkshopsPage() {
         refetch: refetchWorkshops
     } = useGetWorkshopsQuery({}, { refetchOnMountOrArgChange: true });
 
+    console.log("Workshops Data:", workshopsData);
+
 
     return (
         <div className="space-y-6">

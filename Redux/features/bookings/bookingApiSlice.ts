@@ -4,7 +4,7 @@ export const bookingApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // Customer endpoints
     getCustomerBookings: builder.query({
-      query: () => 'bookings',
+      query: () => 'bookings/mybookings',
       providesTags: ['Bookings']
     }),
     createBooking: builder.mutation({

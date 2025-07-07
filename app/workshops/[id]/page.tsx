@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
@@ -37,6 +37,8 @@ import {
 import { RootState } from "@/Redux/app/store";
 
 export default function WorkshopDetailPage({ params }: { params: { id: string } }) {
+
+    const router = useRouter();
     const [selectedTimeSlotId, setSelectedTimeSlotId] = useState<string | null>(null);
 
     const {
@@ -77,6 +79,7 @@ export default function WorkshopDetailPage({ params }: { params: { id: string } 
                 timeSlotId,
                 userId: user.id,
             }).unwrap();
+            router.push("/dashboard");
         } catch (error) {
             console.error("Booking error:", error);
         }

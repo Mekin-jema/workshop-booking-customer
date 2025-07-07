@@ -14,6 +14,7 @@ import {
     CheckCircle2,
     XCircle,
     MoreVertical,
+    Plus,
 } from "lucide-react";
 import Link from "next/link";
 import { useGetCustomerBookingsQuery } from "@/Redux/features/bookings/bookingApiSlice";
@@ -44,8 +45,9 @@ export default function DashboardPage() {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold">My Dashboard</h1>
-                <Link href="/workshops">
-                    <Button>Book New Workshop</Button>
+                <Link href="/workshops" className="inline-flex items-center cursor-pointer">
+
+                    <Button className="cursor-pointer">   <Plus className="mr-2 h-5 w-5" />Book New Workshop</Button>
                 </Link>
             </div>
 

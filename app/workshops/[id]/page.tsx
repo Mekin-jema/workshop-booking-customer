@@ -79,7 +79,7 @@ export default function WorkshopDetailPage({ params }: { params: { id: string } 
                 timeSlotId,
                 userId: user.id,
             }).unwrap();
-            router.push("/dashboard");
+            router.push("/dashboard/bookings");
         } catch (error) {
             console.error("Booking error:", error);
         }

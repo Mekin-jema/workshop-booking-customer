@@ -8,8 +8,10 @@ interface PageProps {
 
 
 
+
 const page = async ({ params }: PageProps) => {
     const resolvedParams = await params;
+    console.log('Resolved Params:', resolvedParams);
     return (
         <div>
             <WorkshopDetailPage params={resolvedParams} />

@@ -87,7 +87,7 @@ export default function Navbar() {
                                     </Link>
                                 </Button>
                                 <Button asChild className="w-full" variant="outline">
-                                    <Link href="/register" onClick={() => setIsOpen(false)}>
+                                    <Link href="/signup" onClick={() => setIsOpen(false)}>
                                         Sign Up
                                     </Link>
                                 </Button>

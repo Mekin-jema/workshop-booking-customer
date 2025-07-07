@@ -65,7 +65,7 @@ export default function WorkshopDetailPage({ params }: { params: { id: string } 
             setSelectedTimeSlotId(null); // reset selection
         }
         if (isBookingError) {
-            const errorMessage = (bookingError as any)?.data?.message || "Booking failed";
+            const errorMessage = (bookingError as any)?.data?.error || "Booking failed";
             toast.error(errorMessage);
         }
     }, [isBookingSuccess, isBookingError, bookingError, refetchWorkshop]);

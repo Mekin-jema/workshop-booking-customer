@@ -1,42 +1,59 @@
+export type Role = 'ADMIN' | 'CUSTOMER';
+
 export interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
-  role: 'admin' | 'customer';
+  password?: string; // Optional if you don't expose it
+  role: Role;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface TimeSlot {
-  id: string;
+  id: number;
   startTime: string;
   endTime: string;
   availableSpots: number;
+  workshopId: number;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Workshop {
-  id: string;
+  id: number;
   title: string;
   description: string;
   date: string;
   maxCapacity: number;
   timeSlots: TimeSlot[];
-  instructor: string;
-  category: string;
+  bookings?: Booking[]; // Optional depending on usage
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
+export type BookingStatus = 'PENDING' | 'CONFIRMED' | 'CANCELLED';
+
 export interface Booking {
-  id: string;
-  workshopId: string;
-  timeSlotId: string;
-  userId: string;
-  status: 'pending' | 'confirmed' | 'cancelled';
+  id: number;
+  customerId: number;
+  workshopId: number;
+  workshop?: Workshop; // Optional for detailed view
+  timeSlotId:{
+    startTime: string;
+    endTime: string;
+  }
+  status: BookingStatus;
+  isDeleted: boolean;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface CreateBookingDto {
-  workshopId: string;
-  timeSlotId: string;
+  workshopId: number;
+  timeSlotId: number;
   name: string;
   email: string;
 }
-
-export type BookingStatus = 'pending' | 'confirmed' | 'cancelled';

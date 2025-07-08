@@ -15,15 +15,20 @@ import {
     XCircle,
     MoreVertical,
     Plus,
+    LogOut,
 } from "lucide-react";
 import Link from "next/link";
 import { useGetCustomerBookingsQuery } from "@/Redux/features/bookings/bookingApiSlice";
 import { Booking } from "@/types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Redux/app/store";
+import { logout } from "@/Redux/features/auth/authSlice";
+import { useRouter } from "next/navigation";
 
 export default function DashboardPage() {
     const { user } = useSelector((state: RootState) => state.auth);
+    const router = useRouter()
+    const dispatch = useDispatch()
 
     const {
         data: BookingData = [],
@@ -45,10 +50,24 @@ export default function DashboardPage() {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold">My Dashboard</h1>
-                <Link href="/workshops" className="inline-flex items-center cursor-pointer">
+                <div className="flex gap-14">
 
-                    <Button className="cursor-pointer">   <Plus className="mr-2 h-5 w-5" />Book New Workshop</Button>
-                </Link>
+                    <Link href="/workshops" className="inline-flex items-center cursor-pointer">
+
+                        <Button className="cursor-pointer">   <Plus className="mr-2 h-5 w-5" />Book New Workshop</Button>
+                    </Link>
+                    <Button
+                        className="cursor-pointer"
+                        variant="ghost"
+                        onClick={() => {
+                            dispatch(logout())
+                            router.push('/login')
+                        }}
+                    >
+                        <LogOut className="cursor-pointer" />
+                    </Button>
+                </div>
+
             </div>
 
             <Card>

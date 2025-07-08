@@ -51,7 +51,7 @@ export default function Navbar() {
 
                 {/* Right Side - Login/Signup */}
                 <div className="hidden md:flex items-center gap-4">
-                    <Button variant="outline" asChild>
+                    <Button variant="outline" className="bg-#F0B100" asChild>
                         <Link href="/login">Login</Link>
                     </Button>
                     <Button asChild>

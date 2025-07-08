@@ -3,7 +3,7 @@ import { RootState } from '@/Redux/app/store';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000/api',
+  baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL ||'https://express-api-742o.onrender.com/api'|| 'http://localhost:3000/api',
   credentials: 'include', // Only if your API uses cookies
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;

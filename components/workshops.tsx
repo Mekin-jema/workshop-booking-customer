@@ -94,7 +94,7 @@ export default function WorkshopDetailPage({ params }: { params: { id: string } 
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold">{workshop.title}</h1>
-                <Link href="/workshops">
+                <Link href="/dashboard/workshops">
                     <Button variant="outline" className="cursor-pointer">Back to Workshops</Button>
                 </Link>
             </div>

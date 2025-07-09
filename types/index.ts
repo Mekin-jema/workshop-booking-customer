@@ -41,7 +41,7 @@ export interface Booking {
   customerId: number;
   workshopId: number;
   workshop?: Workshop; // Optional for detailed view
-  timeSlotId:{
+  timeSlot:{
     startTime: string;
     endTime: string;
   }

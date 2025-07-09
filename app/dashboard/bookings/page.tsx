@@ -52,7 +52,7 @@ export default function DashboardPage() {
                 <h1 className="text-3xl font-bold">My Dashboard</h1>
                 <div className="flex gap-14">
 
-                    <Link href="/workshops" className="inline-flex items-center cursor-pointer">
+                    <Link href="/dashboard/workshops" className="inline-flex items-center cursor-pointer">
 
                         <Button className="cursor-pointer">   <Plus className="mr-2 h-5 w-5" />Book New Workshop</Button>
                     </Link>

@@ -23,7 +23,7 @@ export default async function Home() {
             </p>
             <div className="flex gap-4 justify-center">
               <Button asChild size="lg" className="bg-yellow-400 hover:bg-yellow-500 text-gray-900">
-                <Link href="/workshops">Browse Workshops</Link>
+                <Link href="/dashboard/workshops">Browse Workshops</Link>
               </Button>
               <Button asChild size="lg">
                 <Link href="#how-it-works">How It Works</Link>

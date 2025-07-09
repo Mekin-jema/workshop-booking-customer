@@ -28,7 +28,7 @@ export default function BookingForm({
 
     const [createBooking, { isLoading }] = useCreateBookingMutation();
 
-    const availableSlots = timeSlots.filter((slot) => slot.availableSpots > 0);
+    const availableSlots = timeSlots.filter((slot: TimeSlot) => slot.availableSpots ?? 0 > 0);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

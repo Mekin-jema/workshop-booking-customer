@@ -49,7 +49,7 @@ export default function WorkshopCarousel({ workshops }: { workshops: Workshop[] 
                             </CardContent>
                             <CardFooter>
                                 <Button asChild className="w-full">
-                                    <Link href={`/workshops/${workshop.id}`}>
+                                    <Link href={`/dashboard/workshops/${workshop.id}`}>
                                         View Details
                                     </Link>
                                 </Button>

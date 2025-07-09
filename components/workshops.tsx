@@ -27,7 +27,6 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 
-import { TimeSlot } from "@/types";
 import {
     useGetWorkshopByIdQuery,
 } from "@/Redux/features/workshops/workshopApiSlice";
@@ -35,6 +34,7 @@ import {
     useCreateBookingMutation,
 } from "@/Redux/features/bookings/bookingApiSlice";
 import { RootState } from "@/Redux/app/store";
+import { TimeSlot } from "@/types";
 
 export default function WorkshopDetailPage({ params }: { params: { id: string } }) {
 
@@ -88,7 +88,7 @@ export default function WorkshopDetailPage({ params }: { params: { id: string } 
     if (isLoading) return <div className="text-center py-8">Loading workshop details...</div>;
     if (isError || !workshop) return notFound();
 
-    const availableSlots = workshop.timeSlots.filter((slot: TimeSlot) => slot.availableSpots > 0);
+    const availableSlots = workshop.timeSlots.filter((slot: TimeSlot) => (slot?.availableSpots ?? 0) > 0);
 
     return (
         <div className="space-y-6">

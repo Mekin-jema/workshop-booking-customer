@@ -1,13 +1,23 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Calendar, Clock, Rocket, Sparkles } from "lucide-react";
 import Link from "next/link";
-// import WorkshopCarousel from "@/components/workshop-carousel";
 import Testimonials from "@/components/testimonials";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import WorkshopCarousel from "@/components/workshop-carousel";
+import { useGetWorkshopsQuery } from "@/Redux/features/workshops/workshopApiSlice";
 
-export default async function Home() {
+
+
+
+
+export default function Home() {
+  const {
+    data: featuredWorkshops = [],
+    // isLoading: isWorkshopsLoading,
+  } = useGetWorkshopsQuery({}, { refetchOnMountOrArgChange: true });
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -42,7 +52,7 @@ export default async function Home() {
             Discover our most popular learning experiences curated by industry experts
           </p>
         </div>
-        {/* <WorkshopCarousel workshops={featuredWorkshops} /> */}
+        <WorkshopCarousel workshops={featuredWorkshops} />
       </section>
 
       {/* How It Works */}

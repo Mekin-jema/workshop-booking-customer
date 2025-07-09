@@ -16,6 +16,7 @@ import {
     MoreVertical,
     Plus,
     LogOut,
+    Loader,
 } from "lucide-react";
 import Link from "next/link";
 import { useGetCustomerBookingsQuery } from "@/Redux/features/bookings/bookingApiSlice";
@@ -24,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Redux/app/store";
 import { logout } from "@/Redux/features/auth/authSlice";
 import { useRouter } from "next/navigation";
+import { is } from "date-fns/locale";
 
 export default function DashboardPage() {
     const { user } = useSelector((state: RootState) => state.auth);
@@ -35,6 +37,14 @@ export default function DashboardPage() {
         isLoading,
         isError,
     } = useGetCustomerBookingsQuery({}, { refetchOnMountOrArgChange: true });
+
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <Loader />
+            </div>
+        );
+    }
 
     if (!user) {
         return (
@@ -57,14 +67,14 @@ export default function DashboardPage() {
                         <Button className="cursor-pointer">   <Plus className="mr-2 h-5 w-5" />Book New Workshop</Button>
                     </Link>
                     <Button
-                        className="cursor-pointer"
-                        variant="ghost"
+                        className="cursor-pointer bg-black text-white"
                         onClick={() => {
                             dispatch(logout())
                             router.push('/login')
                         }}
                     >
                         <LogOut className="cursor-pointer" />
+                        Logout
                     </Button>
                 </div>
 
@@ -127,11 +137,7 @@ export default function DashboardPage() {
                                                     Pending
                                                 </span>
                                             )}
-                                            <Link href={`/dashboard/booking/${booking.id}`}>
-                                                <Button variant="ghost" size="icon">
-                                                    <MoreVertical className="h-4 w-4" />
-                                                </Button>
-                                            </Link>
+
                                         </div>
                                     </div>
                                 </div>

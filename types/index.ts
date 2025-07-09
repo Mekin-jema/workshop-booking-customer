@@ -14,11 +14,11 @@ export interface TimeSlot {
   id: number;
   startTime: string;
   endTime: string;
-  availableSpots: number;
-  workshopId: number;
-  isDeleted: boolean;
-  createdAt: string;
-  updatedAt: string;
+  availableSpots?: number;
+  workshopId?: number;
+  isDeleted?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Workshop {

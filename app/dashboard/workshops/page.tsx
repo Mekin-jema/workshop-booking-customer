@@ -29,7 +29,6 @@ export default function WorkshopsPage() {
         return <div>Loading workshops...</div>;
     }
 
-    // Get IDs of workshops the user has already booked
     const bookedWorkshopIds = userBookings.map((booking: Booking) => booking.workshopId);
 
     const handleViewDetails = (workshopId: number) => {
@@ -42,49 +41,55 @@ export default function WorkshopsPage() {
                 <h1 className="text-3xl font-bold">Available Workshops</h1>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {workshopsData.map((workshop: Workshop) => {
-                    const isBooked = bookedWorkshopIds.includes(workshop.id);
-                    const availableSpots = workshop.timeSlots.reduce((sum, slot) => sum + (slot.availableSpots || 0), 0);
-                    const spotsFilled = workshop.maxCapacity - availableSpots;
+            {workshopsData.length === 0 ? (
+                <div className="text-muted-foreground text-center py-10 text-lg">
+                    No workshops available at the moment. Please check back later.
+                </div>
+            ) : (
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {workshopsData.map((workshop: Workshop) => {
+                        const isBooked = bookedWorkshopIds.includes(workshop.id);
+                        const availableSpots = workshop.timeSlots.reduce((sum, slot) => sum + (slot.availableSpots || 0), 0);
+                        const spotsFilled = workshop.maxCapacity - availableSpots;
 
-                    return (
-                        <Card key={workshop.id} className="hover:shadow-lg transition-shadow">
-                            <CardHeader>
-                                <CardTitle>{workshop.title}</CardTitle>
-                                <CardDescription className="line-clamp-2">
-                                    {workshop.description}
-                                </CardDescription>
-                            </CardHeader>
-                            <CardContent className="space-y-2">
-                                <div className="flex items-center text-sm">
-                                    <Calendar className="mr-2 h-4 w-4" />
-                                    {new Date(workshop.date).toLocaleDateString()}
-                                </div>
-                                <div className="flex items-center text-sm">
-                                    <Users className="mr-2 h-4 w-4" />
-                                    {spotsFilled} / {workshop.maxCapacity} spots filled
-                                </div>
-                                {isBooked && (
-                                    <div className="flex items-center text-sm text-green-600">
-                                        <CheckCircle2 className="mr-2 h-4 w-4" />
-                                        You've booked this workshop
+                        return (
+                            <Card key={workshop.id} className="hover:shadow-lg transition-shadow">
+                                <CardHeader>
+                                    <CardTitle>{workshop.title}</CardTitle>
+                                    <CardDescription className="line-clamp-2">
+                                        {workshop.description}
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent className="space-y-2">
+                                    <div className="flex items-center text-sm">
+                                        <Calendar className="mr-2 h-4 w-4" />
+                                        {new Date(workshop.date).toLocaleDateString()}
                                     </div>
-                                )}
-                            </CardContent>
-                            <CardFooter>
-                                <Button
-                                    className="w-full cursor-pointer"
-                                    onClick={() => handleViewDetails(workshop.id)}
-                                    disabled={isBooked}
-                                >
-                                    {isBooked ? "Already Booked" : "View Details"}
-                                </Button>
-                            </CardFooter>
-                        </Card>
-                    );
-                })}
-            </div>
+                                    <div className="flex items-center text-sm">
+                                        <Users className="mr-2 h-4 w-4" />
+                                        {spotsFilled} / {workshop.maxCapacity} spots filled
+                                    </div>
+                                    {isBooked && (
+                                        <div className="flex items-center text-sm text-green-600">
+                                            <CheckCircle2 className="mr-2 h-4 w-4" />
+                                            You've booked this workshop
+                                        </div>
+                                    )}
+                                </CardContent>
+                                <CardFooter>
+                                    <Button
+                                        className="w-full cursor-pointer"
+                                        onClick={() => handleViewDetails(workshop.id)}
+                                        disabled={isBooked}
+                                    >
+                                        {isBooked ? "Already Booked" : "View Details"}
+                                    </Button>
+                                </CardFooter>
+                            </Card>
+                        );
+                    })}
+                </div>
+            )}
         </div>
     );
 }
